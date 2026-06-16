@@ -9,9 +9,25 @@ import SwiftUI
 
 @main
 struct iOSApp2App: App {
+    @State private var isShowingSplash = true
+
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            ZStack {
+                ContentView()
+
+                if isShowingSplash {
+                    SplashView()
+                        .transition(.opacity)
+                }
+            }
+            .onAppear {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 2.6) {
+                    withAnimation(.easeOut(duration: 0.6)) {
+                        isShowingSplash = false
+                    }
+                }
+            }
         }
     }
 }
